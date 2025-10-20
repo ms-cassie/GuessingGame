@@ -5,74 +5,59 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Bear Hunter Ninja</title>
+	<title>Guessing Game</title>
 </head>
 <body>
 
-	<p id="game-dialog"></p>
+	<p id="guessing-game"></p>
 
 	<script type="text/javascript">
-		// Set initial game state
-		let winner = '';
+		// 1. Initialize a random number
+		// 2. Ask the player to guess what the number is, until guessed correctly
+		// 		A. If the player guesses too high, report that to player and tell to guess lower
+		// 		B. If the player guesses too low, report that to player and tell to guess higher
+		// 		C. If guessed correctly tell player
+		// 			- That their guess was correct
+		// 			- How many guesses they made
 
-		// Get player name and alert
-		const playerName = prompt("Welcome to Bear Hunter Ninja! Please enter your name to get started:");
-		alert(`Hi ${playerName} Let's play!!`);
+		// Start game
+		let gameRunning = true;
+		while (gameRunning) {
+			// Set initial game state
+			let numGuesses = 0;
 
-		// Get player choice & set computer choice
-		const playerChoice = prompt("Who are you: Bear, Ninja, or Hunter?");
-		const computerChoice = "Bear";
+			// Get player guess & increment counter
+			let playerGuess = Number(prompt('Guess a Number between 1 and 10.'));
+			numGuesses += 1;
 
-		// Print the game output to the console
-		console.log(`${playerName}, You picked ${playerChoice}!`);
-		console.log(`The computer picked ${computerChoice}!`);
+			// Initialize random number
+			let randomNumber = Math.floor(Math.random() * 10) + 1;
 
-		// Evaluate user choice based on game rules
-		// Bear beats Ninja, Ninja beats Hunter, and Hunter beats Bear
-		switch (playerChoice) {
-			case 'bear':
-				if (computerChoice === 'ninja') {
-					winner = 'computer';
-				}else if (computerChoice === 'hunter') {
-					winner = 'player';
+			// Compare numbers
+			let guessing = true;
+			while (guessing) {
+				if (playerGuess === randomNumber) {
+					guessing = false;
+				}else if (playerGuess > randomNumber) {
+					playerGuess = Number(prompt('Your guess was too high, guess again.'));
+				}else if (playerGuess < randomNumber) {
+					playerGuess = Number(prompt('Your guess was too low, guess again.'));
 				}
 
-				break;
-			case 'hunter':
-				if (computerChoice === 'bear') {
-					winner = 'player';
-				}else if (computerChoice === 'ninja') {
-					winner = 'computer';
-				}
+				// Increment number of guesses
+				numGuesses += 1;
+			}
 
-				break;
-			case 'ninja':
-				if (computerChoice === 'bear') {
-					winner = 'computer';
-				}else if (computerChoice === 'hunter') {
-					winner = 'player';
-				}
+			// Let the player know they guessed correctly & num of guesses
+			alert(`You guessed it in ${numGuesses} guesses!`);
+			
+			// Ask if player would like to continue
+			playerContinue = prompt('Would you like to continue playing (y or n)?').toLowerCase();
+			if (playerContinue === 'n' || playerContinue === 'no') {
+				gameRunning = false;
+			}
 
-				break;
-			default:
-				console.log('unkown choice made');
 		}
-
-		// Get p element and update inner text for game results
-		const gameDialog = document.getElementById("game-dialog");
-
-		// Change output based on game result
-		if (winner === 'player') {
-			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nYou Win!!`;
-			console.log('You Win!!');
-		}else if (winner === 'computer') {
-			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nCopmuter Wins!!`;
-			console.log('Computer Wins!!');
-		}else {
-			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nTie!!`;
-			console.log('Tie!!');
-		}
-
 	</script>
 </body>
 </html>
