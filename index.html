@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="author" content="Cassie Robertson">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Bear Hunter Ninja</title>
+</head>
+<body>
+
+	<p id="game-dialog"></p>
+
+	<script type="text/javascript">
+		// Set initial game state
+		let winner = '';
+
+		// Get player name and alert
+		const playerName = prompt("Welcome to Bear Hunter Ninja! Please enter your name to get started:");
+		alert(`Hi ${playerName} Let's play!!`);
+
+		// Get player choice & set computer choice
+		const playerChoice = prompt("Who are you: Bear, Ninja, or Hunter?");
+		const computerChoice = "Bear";
+
+		// Print the game output to the console
+		console.log(`${playerName}, You picked ${playerChoice}!`);
+		console.log(`The computer picked ${computerChoice}!`);
+
+		// Evaluate user choice based on game rules
+		// Bear beats Ninja, Ninja beats Hunter, and Hunter beats Bear
+		switch (playerChoice) {
+			case 'bear':
+				if (computerChoice === 'ninja') {
+					winner = 'computer';
+				}else if (computerChoice === 'hunter') {
+					winner = 'player';
+				}
+
+				break;
+			case 'hunter':
+				if (computerChoice === 'bear') {
+					winner = 'player';
+				}else if (computerChoice === 'ninja') {
+					winner = 'computer';
+				}
+
+				break;
+			case 'ninja':
+				if (computerChoice === 'bear') {
+					winner = 'computer';
+				}else if (computerChoice === 'hunter') {
+					winner = 'player';
+				}
+
+				break;
+			default:
+				console.log('unkown choice made');
+		}
+
+		// Get p element and update inner text for game results
+		const gameDialog = document.getElementById("game-dialog");
+
+		// Change output based on game result
+		if (winner === 'player') {
+			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nYou Win!!`;
+			console.log('You Win!!');
+		}else if (winner === 'computer') {
+			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nCopmuter Wins!!`;
+			console.log('Computer Wins!!');
+		}else {
+			gameDialog.innerText = `${playerName}, You picked ${playerChoice}!\n\nThe computer picked ${computerChoice}!\n\nTie!!`;
+			console.log('Tie!!');
+		}
+
+	</script>
+</body>
+</html>
